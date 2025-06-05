@@ -2,7 +2,8 @@
 https://www.db-fiddle.com/f/iEsFLGj659kxxchi7ZVhsH/0
 
 # Diagrama ER
-![alt text](IMG-20250604-WA0032.jpg)
+![IMG-20250604-WA0032](https://github.com/user-attachments/assets/80a3c97a-627e-495f-ae37-cd642ea5244a)
+
 
 # A3_BancoDados_SQL_Lucas_Sara_Mikaely_Emilly
 Este é um projeto de banco de dados para controle de carteiras de criptomoedas, desenvolvido para a UC *Programação de Soluções Computacionais*. A solução modela as entidades essenciais de uma carteira digital e foi implementada usando o ambiente [DB Fiddle](https://www.db-fiddle.com/) (MySQL 8.0).
@@ -65,7 +66,7 @@ Este é um projeto de banco de dados para controle de carteiras de criptomoedas,
    - Criação de tabelas (DDL)
    - Inserção de dados (DML)
    - Consultas SQL (SELECT)  
-4. Clique em **Build Schema** e depois em **Run** para testar  
+4. Clique em **Run** para testar  
 
 ---
 
@@ -182,19 +183,7 @@ WHERE u.usuario_id = 1
 ORDER BY t.data_transacao;
 
 ```
-## Consulta SQL de Exemplo
 
-### Transações de Ana Silva
-```sql
-SELECT t.data_transacao, c.simbolo, t.quantidade, t.valor_total
-FROM Transacao AS t
-JOIN Carteira AS w ON t.carteira_id = w.carteira_id
-JOIN Usuario AS u ON w.usuario_id = u.usuario_id
-JOIN Criptomoeda AS c ON t.cripto_id = c.cripto_id
-WHERE u.usuario_id = 1
-ORDER BY t.data_transacao;
-
-```
 ## Contribuição
 
 Este projeto foi desenvolvido por:
