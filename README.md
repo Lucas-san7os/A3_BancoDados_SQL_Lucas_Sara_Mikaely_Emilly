@@ -11,7 +11,6 @@ Este é um projeto de banco de dados para controle de carteiras de criptomoedas,
 ---
 
 ## Funcionalidades
-
 - Cadastro de usuários  
 - Criação de carteiras vinculadas a usuários  
 - Registro de criptomoedas disponíveis  
@@ -31,12 +30,14 @@ Este é um projeto de banco de dados para controle de carteiras de criptomoedas,
 ## Estrutura das Tabelas
 
 ### 1. Usuario
+Armazena informações dos usuários da plataforma 
 - `usuario_id` (PK): Identificador do usuário  
 - `nome`: Nome do usuário  
 - `email`: E-mail (único)  
 - `criado_em`: Data de criação do registro  
 
 ### 2. Carteira
+Representa as carteiras digitais de cada usuário, onde são armazenadas criptomoedas.
 - `carteira_id` (PK): Identificador da carteira  
 - `usuario_id` (FK): Chave estrangeira para Usuario  
 - `nome`: Nome da carteira  
@@ -44,11 +45,13 @@ Este é um projeto de banco de dados para controle de carteiras de criptomoedas,
 - `criado_em`: Data de criação  
 
 ### 3. Criptomoeda
+Contém o cadastro das criptomoedas disponíveis no sistema.
 - `cripto_id` (PK): Identificador da criptomoeda  
 - `nome`: Nome da cripto  
 - `simbolo`: Símbolo único (ex: BTC)  
 
 ### 4. Transacao
+Registra todas as transações de compra de criptomoedas feitas nas carteiras.
 - `transacao_id` (PK): Identificador da transação  
 - `carteira_id` (FK): Referência à carteira  
 - `cripto_id` (FK): Referência à cripto usada  
@@ -158,17 +161,43 @@ JOIN Criptomoeda AS c ON t.cripto_id     = c.cripto_id
 WHERE u.usuario_id = 1
 ORDER BY t.data_transacao;
 
+Exemplo de resultado:
+
+20/05/2025 às 09:15 — 0.025 BTC por R$ 1.250,00
+
+21/05/2025 às 14:30 — 0.100 ETH por R$ 300,00
+
+22/05/2025 às 11:45 — 0.010 BTC por R$ 500,00
+
 -- b) Total investido por carteira:
 SELECT w.nome AS carteira, SUM(t.valor_total) AS total_investido
 FROM Transacao AS t
 JOIN Carteira   AS w ON t.carteira_id = w.carteira_id
 GROUP BY w.carteira_id;
 
+Exemplo de resultado:
+
+Carteira Pessoal: R$ 1.550,00
+
+Carteira de Trading: R$ 500,00
+
+Carteira Principal: R$ 750,00
+
+Carteira Reserva: R$ 150,00
+
 -- c) Quantidade total de cada criptomoeda em todas as carteiras:
 SELECT c.simbolo, SUM(t.quantidade) AS total_quantidade
 FROM Transacao   AS t
 JOIN Criptomoeda AS c ON t.cripto_id = c.cripto_id
 GROUP BY c.cripto_id;
+
+Exemplo de resultado:
+
+Bitcoin (BTC): 0.035 unidades
+
+Ethereum (ETH): 0.150 unidades
+
+Ripple (XRP): 50.000 unidades
 
 ## Consultas SQL de Exemplo
 
@@ -181,6 +210,15 @@ JOIN Usuario AS u ON w.usuario_id = u.usuario_id
 JOIN Criptomoeda AS c ON t.cripto_id = c.cripto_id
 WHERE u.usuario_id = 1
 ORDER BY t.data_transacao;
+
+Essa consulta retorna as transações realizadas pelo usuário com ID 1, listando a data da transação, o símbolo da criptomoeda, a quantidade negociada e o valor total da operação.
+
+Exemplo de resultado:
+
+Data da Transação	Criptomoeda	Quantidade	Valor Total (R$)
+20/05/2025 09:15	BTC	0.02500000	1.250,00
+21/05/2025 14:30	ETH	0.10000000	300,00
+22/05/2025 11:45	BTC	0.01000000	500,00
 
 ```
 
